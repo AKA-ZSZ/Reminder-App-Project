@@ -5,7 +5,7 @@
         <p>Click add to add more tags<p>
       <% } else { %>
         <% reminderItem.tag.forEach((tag)=> {%>
-            <form style="display: inline-block;" action="/reminder/<%= reminderItem.id %>/tag/delete" method="POST">
+            <form style="display: inline-block;" action="/reminder/<%= reminderItem._id %>/tag/delete" method="POST">
                 <span style="font-size: small;" class="badge badge-pill badge-primary"> <%= tag.description %>  <button type="submit" class="btn btn-primary btn-sm"  name="id" value=<%=tag.id%> >
                       x
                 </button></span>
@@ -13,7 +13,7 @@
         <% }) %>
       <% } %>
     
-    <form action="/reminder/<%= reminderItem.id %>/tag/add" method="POST" class="form-tag" style="display: none;">
+    <form action="/reminder/<%= reminderItem._id %>/tag/add" method="POST" class="form-tag" style="display: none;">
         <div class="new-tags">
             <label for="new-tag"></label>
             <input type="text" class="form-control col-3" id="tag" name="tag_name" placeholder="Tag"><br>

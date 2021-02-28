@@ -14,13 +14,16 @@
       <% } else if (reminderItem.completed == false) { %>
       <span class="badge badge-danger">False</span>
       <% } %>
-      <a class="pull-right" href=<%= "/reminder/" + reminderItem.id %>>View</a>
+      <a class="pull-right" href=<%= "/reminder/" + reminderItem._id %>>View</a>
     </li>
     <% }) %>
   </ul>
 
   <h2>Friends' reminders</h2>
   <!-- <p><%= others %></p> -->
+  <!-- old version -->
+  <% /* %>
+  
   <ul class="list-group">
     <% for(let i=0; i< others.length; i++) { %>
       <% for(let j=0; j< others[i].reminders.length; j++) { %>
@@ -35,15 +38,40 @@
         <span class="badge badge-danger">False</span>
         <% } %>
 
-        <a class="pull-right" href=<%= "/reminder/" + others[i].email + "/" + others[i].reminders[j].id %>>View</a>
+        <a class="pull-right" href=<%= "/reminder/" + others[i].email + "/" + others[i].reminders[j]._id %>>View</a>
       </li>
 
     
     <% } }%>
-    
-
-
   </ul>
+  <% */ %>
+  <!-- old -->
+
+
+  <ul class="list-group">
+    <% for(let i=0; i< others.length; i++) { %>
+      <li class="list-group-item">
+        <img src = <%= others[i].photo %> class="rounded-circle z-depth-2 float-left" height=50px, width=50px>
+        <strong><%= others[i].title %>: </strong>
+        <%= others[i].description %>
+        || Completed:
+        <% if (others[i].completed == true) { %>
+        <span class="badge badge-success">True</span>
+        <% } else if (others[i].completed == false) { %>
+        <span class="badge badge-danger">False</span>
+        <% } %>
+
+        <a class="pull-right" href=<%= "/reminder/"  + others[i].email + "/" + others[i]._id %>>View</a>
+
+      </li>
+
+    
+      
+      <% } %>
+  </ul>
+
+
+
 
   
 </div>

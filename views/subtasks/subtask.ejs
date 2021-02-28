@@ -7,7 +7,7 @@
 
     </h5>
 
-    <form action="/reminder/<%= reminderItem.id %>/subtask/update" method="POST" class="collapse" id="create__sub__task" >
+    <form action="/reminder/<%= reminderItem._id %>/subtask/update" method="POST" class="collapse" id="create__sub__task" >
         <div class="new--subtasks">
             <label for="new--task">Create a New Subtask</label>
             <input type="text" class="form-control" id="new--task" name="subtask__msg" placeholder="Subtask">
@@ -20,7 +20,7 @@
         <p>Click add to add more subtask...</p>
       <% } else { %>
         <% reminderItem.subtask.forEach((subtask)=> {%>
-            <form action="/reminder/<%= reminderItem.id %>/subtask/delete" method="POST">
+            <form action="/reminder/<%= reminderItem._id %>/subtask/delete" method="POST">
                 <input type="hidden" name="id" value=<%=subtask.id%>>
                 <li class="list-group-item mb-2 p-1 pl-2">
                     <input onChange="this.form.submit()" type="checkbox" id="subtask__id" name="iscompleted" value="true">

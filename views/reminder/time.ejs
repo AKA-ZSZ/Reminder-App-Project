@@ -1,8 +1,8 @@
 <div class="list-group">
     <h5 class="page-subheader">REMIND ME</h5>
 
-    <form action="/reminder/<%= reminderItem.id %>/time/update" method="POST">
-        <input oninput="this.form.submit()" type="datetime-local" class="form-control col-5" name="time" value=<%= reminderItem.time %>>
+    <form action="/reminder/<%= reminderItem._id %>/time/update" method="POST">
+        <input onblur="this.form.submit()" type="datetime-local" class="form-control col-5" name="time" value=<%= reminderItem.time %>>
     </form>
     
 

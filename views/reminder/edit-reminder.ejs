@@ -1,8 +1,8 @@
 <!-- Should we send subtask, tags and time back as well ? -->
 
 <div class="container">
-  <form action="/reminder/update/<%=reminderItem.id%>" method="POST">
-    <input type="hidden" id="custId" name="id" value=<%=reminderItem.id%>>
+  <form action="/reminder/update/<%=reminderItem._id%>" method="POST">
+    <input type="hidden" id="custId" name="id" value=<%=reminderItem._id%>>
     <div class="form-group">
       <label for="title">Title</label>
       <input type="text" class="form-control" id="titleInput" placeholder="Title" name="title" value=<%= reminderItem.title %>>

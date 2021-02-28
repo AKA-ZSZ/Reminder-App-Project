@@ -17,6 +17,11 @@ const tagApp = require("./tag-routes");
 const { loginPage } = require("./controllers/reminder_controller");
 const youtubeApp = require("./youtubeAPI");
 
+// mongodb
+let mongoose=require("mongoose");
+const dbUrl="mongodb+srv://user:214300@cluster0.atxvw.mongodb.net/<dbname>?retryWrites=true&w=majority";
+
+
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: false }));
 app.use(ejsLayouts);
@@ -29,26 +34,27 @@ app.use(
   })
 );
 
-app.use(middlewares.currenUser);
+// app.use(middlewares.currenUser);
 
-//Case 1: user goes to localhost -> information about site, marketing, login page ...
+//Case 1: user goes to localhost: 8080 -> information about site, marketing, login page ...
 app.get("/", (req, res) => {
   res.send("Go to http://localhost:3000/reminders");
 });
 
-// Case 2: user goes to localhost/reminder/friends -> Friends list, friend search box, add/delete button
+// Case xxx: friends
 app.get("/reminder/friends", authCheck, reminderController.showfriend);
 
-//Case 3: user add or remove friend from friend list by entering friend email
 app.post("/reminder/friends", authCheck, buttonCheck);
 
-//Case 4: User goes to Localhost:8080/reminder -> show a list of reminders
+app.post("/reminder/friends",authCheck,reminderController.removeFriend);
+
+//Case 2: User goes to Localhost:8080/reminder -> show a list of reminders
 app.get("/reminders/", authCheck, reminderController.list);
 
-//Case 5: user goes to localhost:8080/reminder -> show a CREATE REMINDER RAGE
+//Case 3: user goes to localhost:8080/reminder -> show a CREATE REMINDER RAGE
 app.get("/reminder/new", authCheck, reminderController.new);
 
-//Case 6: User SENDS NEW REMINDER DATA TO US (CREATING A REMINDER)
+//Case 4: User SENDS NEW REMINDER DATA TO US (CREATING A REMINDER)
 app.post(
   "/reminders",
   authCheck,
@@ -56,38 +62,40 @@ app.post(
   reminderController.create
 );
 
-// Case 7: User wants to see an individual reminder
+// Case 5: User wants to see an individual reminder
 app.get("/reminder/:id", authCheck, reminderController.listOne);
 
-// Case 8: User wnats to EDIT an individual reminder
+//
+// app.get("/reminder/:email/:id", authCheck, reminderController.listFriendReminder);
+
+// Case 6: User wnats to EDIT an individual reminder
 app.get("/reminder/:id/edit", authCheck, reminderController.edit);
 
-// Case 9: User wants to view a friend reminder
 app.get(
   "/reminder/:email/:id",
   authCheck,
   reminderController.listFriendReminder
 );
 
-//Case 10: User clicks the update button from Case 6, and expects their reminder to be updated
+//Case 7: User clicks the update button from Case 6, and expects their reminder to be updated
 app.post("/reminder/update/:id", authCheck, reminderController.update);
 
-//Case 11: User clicks the delete button and we expect the reminder to be deleted
+//Case 8: User clicks the delete button and we expect the reminder to be deleted
 app.post("/reminder/delete/:id", authCheck, reminderController.delete);
 
-//Case 12: User wants to go to register page
+//Case 9: User wants to go to register page
 app.get("/register", authController.register);
 
-//Case 13: User wants to go to login page
+//Case 10: User wants to go to login page
 app.get("/login", authController.login);
 
-//Case 14: User wants to register for an account
+//Case 11: User wants to register for an account
 app.post("/register", authController.registerSubmit);
 
-//Case 15: User wants to login with account info
+//Case 12: User wants to login with account info
 app.post("/login", authController.loginSubmit);
 
-// Case 16: User wants to logout
+// Case 13: User wants to logout
 app.post("/logout", authController.logout);
 
 //======= Subtask =============
@@ -114,15 +122,29 @@ tagApp.deletePost(app);
 //========= Youtube Api =======
 
 // Case 1: User wants to search for youtube videos
-youtubeApp.get(app, authCheck);
+youtubeApp.get(app);
 
 // Case 2: User gets youtube videos
-youtubeApp.post(app, authCheck);
+youtubeApp.post(app);
 
 // Case 3: User wants add their favorite videos
-youtubeApp.add(app, authCheck);
+youtubeApp.add(app);
+
+module.exports.connection=mongoose.connect(dbUrl,{ useNewUrlParser: true, useUnifiedTopology: true },(err)=>{
+  if(err){
+    console.log(err);
+  }else{
+    console.log('a user connected');
+    // web service request through port 3000
+    app.listen(3000, () => {
+      console.log("Our server is running on http://localhost:3000/ 🚀");
+    });
+
+  }
+  
+});
 
 // web service request through port 3000
-app.listen(3000, () => {
-  console.log("Our server is running on http://localhost:3000/ 🚀");
-});
+// app.listen(3000, () => {
+//   console.log("Our server is running on http://localhost:3000/ 🚀");
+// });

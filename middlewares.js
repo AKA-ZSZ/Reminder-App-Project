@@ -1,4 +1,4 @@
-const database = require("./database");
+// const database = require("./database");
 
 let middlewares = {
   parseBodyToArr: function (req, res, next) {
@@ -13,19 +13,19 @@ let middlewares = {
         : reminder_tag;
     next();
   },
-  currenUser: function (req, res, next) {
-    if (req.session.user) {
-      if (database[req.session.user]) {
-        req.currentUser = database[req.session.user];
-        res.locals.currentUser = req.currentUser;
-        next();
-      } else {
-        next();
-      }
-    } else {
-      next();
-    }
-  },
+  // currenUser: function (req, res, next) {
+  //   if (req.session.user) {
+  //     if (database[req.session.user]) {
+  //       req.currentUser = database[req.session.user];
+  //       res.locals.currentUser = req.currentUser;
+  //       next();
+  //     } else {
+  //       next();
+  //     }
+  //   } else {
+  //     next();
+  //   }
+  // },
 };
 
 module.exports = middlewares;
